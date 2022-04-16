@@ -34,14 +34,14 @@ class FirstFragment : Fragment(R.layout.firs_lay) {
         mainWidgets?.layoutManager = LinearLayoutManager(requireContext())
         bottomWidgets?.adapter = MainAdapter(listOf("BottomWidget"))
         bottomWidgets?.layoutManager = LinearLayoutManager(requireContext())
-        imageView = view.findViewById(R.id.imageView)
-        imageView = view.findViewById(R.id.linear_layout_title)
 
-        view.findViewById<TextView>(R.id.header_title).text = "headerTitle"
-        view.findViewById<TextView>(R.id.header_text).text = "headerSubtitle"
-
-        view.findViewById<TextView>(R.id.toolbarTitle).text = "headerTitle"
-        view.findViewById<TextView>(R.id.toolbarSubtitle).text = "headerSubtitle"
+        private fun addAppBarLayoutOnOffsetChangedListeners() {
+            appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                appBarLayout.totalScrollRange.let { range ->
+                    subtitleTextView.alpha = (range + (verticalOffset * 2).coerceIn(-range, 0)).toFloat() / range
+                }
+            })
+        }
 
 
 
